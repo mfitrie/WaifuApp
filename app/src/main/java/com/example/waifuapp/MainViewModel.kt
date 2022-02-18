@@ -18,6 +18,7 @@ import kotlin.coroutines.coroutineContext
 class MainViewModel(private val repository: Repository): ViewModel(){
 
     val waifuResponse: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
+    val waifuResponseGif: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
 
 
     fun getWaifu(){
@@ -34,10 +35,25 @@ class MainViewModel(private val repository: Repository): ViewModel(){
             }catch (e: SocketTimeoutException){
                 Log.d("SOCKET_TIMEOUT", "Connection timeout")
             }
+        }
+    }
 
 
 
+    fun getWaifuGif(gif: Boolean){
 
+//        // handle connection timeout
+//        val couroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+//            Log.d("SOCKET_TIMEOUT", "socket timeout")
+//        }
+
+        viewModelScope.launch {
+            try {
+                val response = repository.getWaifuGif(gif)
+                waifuResponseGif.value = response
+            }catch (e: SocketTimeoutException){
+                Log.d("SOCKET_TIMEOUT", "Connection timeout")
+            }
         }
     }
 

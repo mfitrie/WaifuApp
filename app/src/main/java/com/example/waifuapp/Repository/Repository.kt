@@ -10,4 +10,8 @@ class Repository {
         return RetrofitInstance.api.getWaifuPic()
     }
 
+    suspend fun getWaifuGif(gif: Boolean): Response<WaifuJson>{
+        return RetrofitInstance.api.getWaifuGif(gif)
+    }
+
 }

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.waifuapp.Repository.Repository
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,8 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         btn_get.setOnClickListener {
             getPic(viewModel)
+        }
 
-
+        btn_gif.setOnClickListener{
+            getGif(viewModel)
         }
 
 
@@ -70,9 +73,6 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getPic(viewModel: MainViewModel) {
-
-
-
         progressBar.visibility = View.VISIBLE
         Log.d("PROGRESS_BAR", "getPic: progressbar visibile")
 
@@ -88,7 +88,49 @@ class MainActivity : AppCompatActivity() {
 
                     Log.d("RESPONSE", data.toString())
 
-                    Picasso.with(this).load(data).into(im_WaifuPic)
+                    Glide.with(this).load(data).into(im_WaifuPic)
+
+                    progressBar.visibility = View.GONE
+                    Log.d("PROGRESS_BAR", "getPic: progressbar gone")
+
+
+                } else {
+                    Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(this, "Please turn on your internet connection", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun getGif(viewModel: MainViewModel) {
+        progressBar.visibility = View.VISIBLE
+        Log.d("PROGRESS_BAR", "getPic: progressbar visibile")
+
+        if (checkInternetConnection()) {
+            viewModel.getWaifuGif(true)
+            viewModel.waifuResponseGif.observe(this, Observer { response ->
+                if (response.isSuccessful) {
+
+                    // test code
+//                    val data = response.body()?.images.toString().split(", ")[12].split("url=")[1].split(")]")[0]
+
+                    Log.d("INSIDE_GIF_SCOPE", "getGif: Im clicked")
+
+                    val data = response.body()?.images?.get(0)?.url
+
+                    Log.d("RESPONSE", data.toString())
+
+                    Glide.with(this).load(data).into(im_WaifuPic)
 
                     progressBar.visibility = View.GONE
                     Log.d("PROGRESS_BAR", "getPic: progressbar gone")
