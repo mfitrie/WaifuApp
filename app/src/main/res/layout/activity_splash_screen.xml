@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv_anime"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:src="@drawable/anime_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

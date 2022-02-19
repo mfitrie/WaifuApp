@@ -10,11 +10,10 @@
 
     <ImageView
         android:id="@+id/im_WaifuPic"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="97dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_gif"
+        android:layout_width="411dp"
+        android:layout_height="450dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,45 +21,43 @@
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="201dp"
-        android:layout_marginBottom="201dp"
         android:indeterminate="true"
 
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/im_WaifuPic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/im_WaifuPic"
+        app:layout_constraintStart_toStartOf="@+id/im_WaifuPic"
+        app:layout_constraintTop_toTopOf="@+id/im_WaifuPic"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/btn_get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:background="@drawable/button_corner"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
+        android:layout_marginStart="35dp"
         android:text="Get Waifu Pic"
         android:textSize="15sp"
         app:backgroundTint="#e85819"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_gif"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
 
     <Button
         android:id="@+id/btn_gif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="136dp"
         android:background="@drawable/button_corner"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
+        android:layout_marginEnd="35dp"
         android:text="Get Waifu Gif"
         android:textSize="15sp"
         app:backgroundTint="#e85819"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_get"
         app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
