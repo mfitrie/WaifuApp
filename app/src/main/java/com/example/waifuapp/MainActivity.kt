@@ -14,12 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.waifuapp.Repository.Repository
+import com.example.waifuapp.adapter.ViewPagerAdapter
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,126 +30,30 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
 
-        val repository = Repository()
-        val viewModelFactory = MainViewModelProviderFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        view_pager2.adapter = viewPagerAdapter
 
-
-        getPic(viewModel)
-
-        btn_get.setOnClickListener {
-            getPic(viewModel)
-        }
-
-        btn_gif.setOnClickListener{
-            getGif(viewModel)
-        }
-
-
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun checkInternetConnection(): Boolean {
-        val connectionManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectionManager.let {
-            val capabilities =
-                connectionManager.getNetworkCapabilities(connectionManager.activeNetwork)
-            capabilities.let {
-                if (capabilities != null) {
-                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                        return true
-                    }
-                    if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                        return true
-                    }
-
+        TabLayoutMediator(tab_layout, view_pager2){ tab, position ->
+            when(position){
+                0->{
+                    tab.text = "Waifu Pic"
+                    tab.setIcon(R.drawable.ic_anime_icon)
+                }
+                1 ->{
+                    tab.text = "Like pic"
+                    tab.setIcon(R.drawable.ic_like_icon)
+                }
+                else->{
+                    tab.text = "Waifu Pic"
                 }
             }
-        }
-        return false
-    }
-
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getPic(viewModel: MainViewModel) {
-        progressBar.visibility = View.VISIBLE
-        Log.d("PROGRESS_BAR", "getPic: progressbar visibile")
-
-        if (checkInternetConnection()) {
-            viewModel.getWaifu()
-            viewModel.waifuResponse.observe(this, Observer { response ->
-                if (response.isSuccessful) {
-
-                    // test code
-//                    val data = response.body()?.images.toString().split(", ")[12].split("url=")[1].split(")]")[0]
-
-                    val data = response.body()?.images?.get(0)?.url
-
-                    Log.d("RESPONSE", data.toString())
-
-                    Glide.with(this).load(data).into(im_WaifuPic)
-
-                    progressBar.visibility = View.GONE
-                    Log.d("PROGRESS_BAR", "getPic: progressbar gone")
-
-
-                } else {
-                    Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
-                }
-            })
-
-
-        } else {
-            Toast.makeText(this, "Please turn on your internet connection", Toast.LENGTH_SHORT)
-                .show()
-        }
-
+//            tab.text = "Tab ${position + 1}"
+        }.attach()
     }
 
 
 
-
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun getGif(viewModel: MainViewModel) {
-        progressBar.visibility = View.VISIBLE
-        Log.d("PROGRESS_BAR", "getPic: progressbar visibile")
-
-        if (checkInternetConnection()) {
-            viewModel.getWaifuGif(true)
-            viewModel.waifuResponseGif.observe(this, Observer { response ->
-                if (response.isSuccessful) {
-
-                    // test code
-//                    val data = response.body()?.images.toString().split(", ")[12].split("url=")[1].split(")]")[0]
-
-                    Log.d("INSIDE_GIF_SCOPE", "getGif: Im clicked")
-
-                    val data = response.body()?.images?.get(0)?.url
-
-                    Log.d("RESPONSE", data.toString())
-
-                    Glide.with(this).load(data).into(im_WaifuPic)
-
-                    progressBar.visibility = View.GONE
-                    Log.d("PROGRESS_BAR", "getPic: progressbar gone")
-
-
-                } else {
-                    Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
-                }
-            })
-
-
-        } else {
-            Toast.makeText(this, "Please turn on your internet connection", Toast.LENGTH_SHORT)
-                .show()
-        }
-
-    }
 
 
 }

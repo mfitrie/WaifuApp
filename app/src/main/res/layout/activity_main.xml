@@ -1,63 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_anime"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id="@+id/im_WaifuPic"
-        android:layout_width="411dp"
-        android:layout_height="450dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        android:background="#e85819"
+        app:tabTextColor="#fff"
+        app:tabIconTint="#fff"
+        app:tabIndicatorColor="#fff"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="146dp"/>
 
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/im_WaifuPic"
-        app:layout_constraintEnd_toEndOf="@+id/im_WaifuPic"
-        app:layout_constraintStart_toStartOf="@+id/im_WaifuPic"
-        app:layout_constraintTop_toTopOf="@+id/im_WaifuPic"
-        tools:visibility="visible" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
-    <Button
-        android:id="@+id/btn_get"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_corner"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_marginStart="35dp"
-        android:text="Get Waifu Pic"
-        android:textSize="15sp"
-        app:backgroundTint="#e85819"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
 
-    <Button
-        android:id="@+id/btn_gif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_corner"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_marginEnd="35dp"
-        android:text="Get Waifu Gif"
-        android:textSize="15sp"
-        app:backgroundTint="#e85819"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
