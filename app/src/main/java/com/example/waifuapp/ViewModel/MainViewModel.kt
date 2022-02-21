@@ -1,35 +1,30 @@
 package com.example.waifuapp.ViewModel
 
-import android.app.Activity
 import android.app.Application
-import android.content.Context
-import android.content.Intent
 import android.media.MediaScannerConnection
 import android.os.Environment
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.waifuapp.Repository.Repository
-import com.example.waifuapp.api.RetrofitInstance
-import com.example.waifuapp.fragment.WaifuPic
-import com.example.waifuapp.model.WaifuJson
-import com.example.waifuapp.util.Constant
+import com.example.waifuapp.model.AnimeQuote.AnimeQuoteData
+import com.example.waifuapp.model.Waifu.WaifuJson
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-import java.lang.Appendable
 import java.lang.Exception
 import java.net.SocketTimeoutException
-import kotlin.coroutines.coroutineContext
 
 class MainViewModel(private val repository: Repository, context: Application): AndroidViewModel(context){
 
     val waifuResponse: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
     val waifuResponseGif: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
     val waifuResponseDownlaod: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
+
+    // Anime quote
+    val animeQuoteResponse: MutableLiveData<Response<AnimeQuoteData>> = MutableLiveData()
 
 
     fun getWaifu(){
@@ -128,6 +123,15 @@ class MainViewModel(private val repository: Repository, context: Application): A
         return ""
     }
 
+
+
+    // Get Anime quote
+    fun getAnimeQuote(){
+        viewModelScope.launch {
+            val response = repository.getAnimeQuote()
+            animeQuoteResponse.value = response
+        }
+    }
 
 
 

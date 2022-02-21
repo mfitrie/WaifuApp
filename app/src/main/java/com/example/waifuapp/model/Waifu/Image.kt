@@ -1,6 +1,4 @@
-package com.example.waifuapp.model
-
-import com.google.gson.GsonBuilder
+package com.example.waifuapp.model.Waifu
 
 data class Image(
     val dominant_color: String,

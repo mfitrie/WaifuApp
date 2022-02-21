@@ -1,6 +1,7 @@
 package com.example.waifuapp.api
 
-import com.example.waifuapp.model.WaifuJson
+import com.example.waifuapp.model.AnimeQuote.AnimeQuoteData
+import com.example.waifuapp.model.Waifu.WaifuJson
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -20,5 +21,10 @@ interface WaifuAPI {
     @Streaming
     @GET
     suspend fun downloadWaifu(@Url url: String): Response<ResponseBody>
+
+
+    // Anime quote
+    @GET("https://animechan.vercel.app/api/random")
+    suspend fun getAnimeQuote(): Response<AnimeQuoteData>
 
 }

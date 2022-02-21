@@ -1,4 +1,4 @@
-package com.example.waifuapp.model
+package com.example.waifuapp.model.Waifu
 
 data class Tag(
     val description: String,

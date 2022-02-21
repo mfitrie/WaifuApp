@@ -10,12 +10,37 @@
 
     <ImageView
         android:id="@+id/im_WaifuPic"
-        android:layout_width="411dp"
-        android:layout_height="450dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic">
+
+        <TextView
+            android:id="@+id/tv_animeQuote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This is anime quote"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            tools:layout_editor_absoluteX="20dp"
+            tools:layout_editor_absoluteY="425dp" />
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -25,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/im_WaifuPic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/im_WaifuPic"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/im_WaifuPic"
         tools:visibility="visible" />
 
     <Button
@@ -41,7 +66,7 @@
         app:backgroundTint="#e85819"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_get"
-        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
         android:id="@+id/btn_get"
@@ -50,25 +75,25 @@
         android:background="@drawable/button_corner"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:text="Get Waifu Pic"
         android:textSize="15sp"
         app:backgroundTint="#e85819"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_like"
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:background="@drawable/button_like_background"
-        app:backgroundTint="#e85819"
         android:padding="12dp"
+        android:layout_marginEnd="20dp"
+        app:backgroundTint="#e85819"
         app:icon="@drawable/ic_download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_gif"
-        app:layout_constraintTop_toBottomOf="@+id/im_WaifuPic" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

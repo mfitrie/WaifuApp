@@ -132,6 +132,16 @@ class WaifuPic : Fragment() {
             })
 
 
+            // Anime Quote
+            viewModel.getAnimeQuote()
+            viewModel.animeQuoteResponse.observe(viewLifecycleOwner, Observer { response ->
+                if(response.isSuccessful){
+                    val data = response.body()?.quote
+                    tv_animeQuote.text = data.toString()
+                }
+            })
+
+
         } else {
             Toast.makeText(requireContext(), "Please turn on your internet connection",Toast.LENGTH_SHORT).show()
         }
@@ -163,6 +173,16 @@ class WaifuPic : Fragment() {
 
                 } else {
                     Toast.makeText(requireContext(), response.code(), Toast.LENGTH_SHORT).show()
+                }
+            })
+
+
+            // Anime Quote
+            viewModel.getAnimeQuote()
+            viewModel.animeQuoteResponse.observe(viewLifecycleOwner, Observer { response ->
+                if(response.isSuccessful){
+                    val data = response.body()?.quote
+                    tv_animeQuote.text = data.toString()
                 }
             })
 
