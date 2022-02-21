@@ -29,6 +29,7 @@ class WaifuPic : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private val PERMISSION_ID = 10
+    private lateinit var data: String
 
 
     override fun onCreateView(
@@ -58,6 +59,20 @@ class WaifuPic : Fragment() {
 
         btn_gif.setOnClickListener {
             getGif(viewModel)
+        }
+
+
+        // download
+        btn_like.setOnClickListener {
+            if(checkPermission()){
+                if(checkInternetConnection()){
+                    downloadImage(data)
+                    Toast.makeText(context, "Successfully download", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(context, "Please turn on your internet connection",Toast.LENGTH_SHORT).show()
+                }
+
+            }
         }
 
 
@@ -100,40 +115,25 @@ class WaifuPic : Fragment() {
 
                     // test code
 //                    val data = response.body()?.images.toString().split(", ")[12].split("url=")[1].split(")]")[0]
-                    val data = response.body()?.images?.get(0)?.url
-
+                    data = response.body()?.images?.get(0)?.url.toString()
                     Log.d("RESPONSE", data.toString())
-
                     Glide.with(this).load(data).into(im_WaifuPic)
 
                     progressBar.visibility = View.GONE
                     Log.d("PROGRESS_BAR", "getPic: progressbar gone")
 
-                    // download
-                    btn_like.setOnClickListener {
-                        if(checkPermission()){
-                            if (data != null) {
-                                downloadImage(data)
-                                Toast.makeText(context, "Successfully download", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
+
 
 
                 } else {
-                    Toast.makeText(requireContext(), response.code(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
                     Log.d("FAILED", "getPic: ${response.code()}")
                 }
             })
 
 
         } else {
-            Toast.makeText(
-                requireContext(),
-                "Please turn on your internet connection",
-                Toast.LENGTH_SHORT
-            )
-                .show()
+            Toast.makeText(requireContext(), "Please turn on your internet connection",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -153,11 +153,8 @@ class WaifuPic : Fragment() {
 //                    val data = response.body()?.images.toString().split(", ")[12].split("url=")[1].split(")]")[0]
 
                     Log.d("INSIDE_GIF_SCOPE", "getGif: Im clicked")
-
-                    val data = response.body()?.images?.get(0)?.url
-
+                    data = response.body()?.images?.get(0)?.url.toString()
                     Log.d("RESPONSE", data.toString())
-
                     Glide.with(this).load(data).into(im_WaifuPic)
 
                     progressBar.visibility = View.GONE
