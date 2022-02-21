@@ -138,6 +138,8 @@ class WaifuPic : Fragment() {
                 if(response.isSuccessful){
                     val data = response.body()?.quote
                     tv_animeQuote.text = data.toString()
+                }else{
+                    tv_animeQuote.text = "We can't waste time Worrying about the what if's"
                 }
             })
 
@@ -183,8 +185,11 @@ class WaifuPic : Fragment() {
                 if(response.isSuccessful){
                     val data = response.body()?.quote
                     tv_animeQuote.text = data.toString()
+                }else{
+                    tv_animeQuote.text = "We can't waste time Worrying about the what if's"
                 }
             })
+
 
 
         } else {
