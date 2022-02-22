@@ -125,7 +125,11 @@ class WaifuPic : Fragment() {
 
 
 
-                } else {
+                }
+                else if(response.code() == 404){
+                    Toast.makeText(context, "Fail to get Pic", Toast.LENGTH_SHORT).show()
+                }
+                else {
                     Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
                     Log.d("FAILED", "getPic: ${response.code()}")
                 }
@@ -173,7 +177,10 @@ class WaifuPic : Fragment() {
                     Log.d("PROGRESS_BAR", "getPic: progressbar gone")
 
 
-                } else {
+                }else if(response.code() == 404){
+                    Toast.makeText(context, "Fail to get Gif", Toast.LENGTH_SHORT).show()
+                }
+                else {
                     Toast.makeText(requireContext(), response.code(), Toast.LENGTH_SHORT).show()
                 }
             })
