@@ -4,6 +4,7 @@ import android.app.Application
 import android.media.MediaScannerConnection
 import android.os.Environment
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.waifuapp.Repository.Repository
 import com.example.waifuapp.model.AnimeQuote.AnimeQuoteData
@@ -40,6 +41,7 @@ class MainViewModel(private val repository: Repository, context: Application): A
                 waifuResponse.value = response
             }catch (e: SocketTimeoutException){
                 Log.d("SOCKET_TIMEOUT", "Connection timeout")
+                Toast.makeText(getApplication(), "Failed to get the Pic", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -59,6 +61,7 @@ class MainViewModel(private val repository: Repository, context: Application): A
                 waifuResponseGif.value = response
             }catch (e: SocketTimeoutException){
                 Log.d("SOCKET_TIMEOUT", "Connection timeout")
+                Toast.makeText(getApplication(), "Failed to get the Gif", Toast.LENGTH_SHORT).show()
             }
         }
     }
