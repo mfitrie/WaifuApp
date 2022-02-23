@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface WaifuAPI {
 
     @Headers("Content-Type: application/json")
-    @GET("random?is_nsfw=false")
+    @GET("random?is_nsfw=false&gif=false")
     suspend fun getWaifuPic(): Response<WaifuJson>
 
     @GET("random?is_nsfw=false&gif")

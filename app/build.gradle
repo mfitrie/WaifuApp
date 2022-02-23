@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -66,5 +67,15 @@ dependencies {
 
     // viewpage2
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    // Room components
+    implementation "androidx.room:room-runtime:2.4.1"
+    kapt "androidx.room:room-compiler:2.4.1"
+    implementation "androidx.room:room-ktx:2.4.1"
+    androidTestImplementation "androidx.room:room-testing:2.4.1"
+
+
+    // Circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }

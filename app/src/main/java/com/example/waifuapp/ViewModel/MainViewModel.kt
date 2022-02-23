@@ -6,9 +6,12 @@ import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.example.waifuapp.Database.WaifuDatabase
+import com.example.waifuapp.Repository.DatabaseRepository
 import com.example.waifuapp.Repository.Repository
 import com.example.waifuapp.model.AnimeQuote.AnimeQuoteData
 import com.example.waifuapp.model.Waifu.WaifuJson
+import com.example.waifuapp.model.WaifuDB.WaifuDB
 import kotlinx.coroutines.*
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -20,12 +23,26 @@ import java.net.SocketTimeoutException
 
 class MainViewModel(private val repository: Repository, context: Application): AndroidViewModel(context){
 
+    // WAIFU DATABASE
+    val readAllData: LiveData<List<WaifuDB>>
+    private val waifuRepository: DatabaseRepository
+
+    // WAIFU API
     val waifuResponse: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
     val waifuResponseGif: MutableLiveData<Response<WaifuJson>> = MutableLiveData()
     val waifuResponseDownlaod: MutableLiveData<Response<ResponseBody>> = MutableLiveData()
 
     // Anime quote
     val animeQuoteResponse: MutableLiveData<Response<AnimeQuoteData>> = MutableLiveData()
+
+
+
+    init {
+        val waifuDAO = WaifuDatabase.getDatabase(getApplication()).waifuDAO()
+        waifuRepository = DatabaseRepository(waifuDAO)
+        readAllData = waifuRepository.readAllData
+    }
+
 
 
     fun getWaifu(){
@@ -136,6 +153,14 @@ class MainViewModel(private val repository: Repository, context: Application): A
         }
     }
 
+
+
+    // DATABASE
+    fun addWaifu(waifuDB: WaifuDB){
+        viewModelScope.launch {
+            waifuRepository.addWaifu(waifuDB)
+        }
+    }
 
 
 }

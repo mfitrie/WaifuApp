@@ -22,6 +22,7 @@ import com.example.waifuapp.ViewModel.MainViewModel
 import com.example.waifuapp.ViewModel.MainViewModelProviderFactory
 import com.example.waifuapp.R
 import com.example.waifuapp.Repository.Repository
+import com.example.waifuapp.model.WaifuDB.WaifuDB
 import kotlinx.android.synthetic.main.fragment_waifu_pic.*
 import java.util.jar.Manifest
 
@@ -30,7 +31,7 @@ class WaifuPic : Fragment() {
     private lateinit var viewModel: MainViewModel
     private val PERMISSION_ID = 10
     private lateinit var data: String
-
+    private lateinit var quoteData: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +74,12 @@ class WaifuPic : Fragment() {
                 }
 
             }
+        }
+
+
+        // like
+        btn_like.setOnClickListener{
+            insertDataToDatabase()
         }
 
 
@@ -132,16 +139,7 @@ class WaifuPic : Fragment() {
             })
 
 
-            // Anime Quote
-            viewModel.getAnimeQuote()
-            viewModel.animeQuoteResponse.observe(viewLifecycleOwner, Observer { response ->
-                if(response.isSuccessful){
-                    val data = response.body()?.quote
-                    tv_animeQuote.text = data.toString()
-                }else{
-                    tv_animeQuote.text = "We can't waste time Worrying about the what if's"
-                }
-            })
+            getQuote(viewModel)
 
 
         } else {
@@ -179,16 +177,7 @@ class WaifuPic : Fragment() {
             })
 
 
-            // Anime Quote
-            viewModel.getAnimeQuote()
-            viewModel.animeQuoteResponse.observe(viewLifecycleOwner, Observer { response ->
-                if(response.isSuccessful){
-                    val data = response.body()?.quote
-                    tv_animeQuote.text = data.toString()
-                }else{
-                    tv_animeQuote.text = "We can't waste time Worrying about the what if's"
-                }
-            })
+            getQuote(viewModel)
 
 
 
@@ -204,11 +193,40 @@ class WaifuPic : Fragment() {
     }
 
 
+
+    private fun getQuote(viewModel: MainViewModel){
+        // Anime Quote
+        viewModel.getAnimeQuote()
+        viewModel.animeQuoteResponse.observe(viewLifecycleOwner, Observer { response ->
+            if(response.isSuccessful){
+                val data = response.body()?.quote
+
+                // assign to database
+                quoteData = data.toString()
+
+                tv_animeQuote.text = data.toString()
+            }else{
+                tv_animeQuote.text = "We can't waste time Worrying about the what if's"
+            }
+        })
+    }
+
+
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun downloadImage(url: String) {
         if (checkInternetConnection()) {
             viewModel.downloadWaifu(url)
         }
+    }
+
+
+
+    private fun insertDataToDatabase(){
+        val url = data
+        val waifu = WaifuDB(0, url, quoteData)
+        viewModel.addWaifu(waifu)
+        Toast.makeText(context, "Waifu Liked", Toast.LENGTH_SHORT).show()
     }
 
 
