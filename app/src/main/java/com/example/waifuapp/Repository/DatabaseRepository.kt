@@ -11,4 +11,8 @@ class DatabaseRepository(private val waifuDAO: waifuDAO) {
     suspend fun addWaifu(waifuDB: WaifuDB){
         waifuDAO.addWaifu(waifuDB)
     }
+
+    suspend fun deleteWaifu(waifuDB: WaifuDB){
+        waifuDAO.deleteWaifu(waifuDB)
+    }
 }

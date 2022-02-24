@@ -161,8 +161,14 @@ class MainViewModel(private val repository: Repository, context: Application): A
 
     // DATABASE
     fun addWaifu(waifuDB: WaifuDB){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             waifuRepository.addWaifu(waifuDB)
+        }
+    }
+
+    fun deleteWaifu(waifuDB: WaifuDB){
+        viewModelScope.launch(Dispatchers.IO) {
+            waifuRepository.deleteWaifu(waifuDB)
         }
     }
 

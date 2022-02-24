@@ -169,7 +169,10 @@ class WaifuPic : Fragment() {
                     Log.d("INSIDE_GIF_SCOPE", "getGif: Im clicked")
                     data = response.body()?.images?.get(0)?.url.toString()
                     Log.d("RESPONSE", data.toString())
-                    Glide.with(this).load(data).into(im_WaifuPic)
+                    Glide
+                        .with(this)
+                        .load(data)
+                        .into(im_WaifuPic)
 
                     progressBar.visibility = View.GONE
                     Log.d("PROGRESS_BAR", "getPic: progressbar gone")

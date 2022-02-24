@@ -16,6 +16,7 @@ import com.example.waifuapp.R
 import com.example.waifuapp.Repository.Repository
 import com.example.waifuapp.ViewModel.MainViewModel
 import com.example.waifuapp.ViewModel.MainViewModelProviderFactory
+import com.example.waifuapp.model.WaifuDB.WaifuDB
 import kotlinx.android.synthetic.main.fragment_dialog_waifu_liked.*
 import kotlinx.android.synthetic.main.fragment_waifu_pic.*
 
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_waifu_pic.*
 class DialogWaifuLiked : DialogFragment() {
 
 private lateinit var viewModel: MainViewModel
-private lateinit var urlData: String
+private lateinit var waifu: WaifuDB
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +45,7 @@ private lateinit var urlData: String
         viewModel = ViewModelProvider(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
         viewModel.data.observe(viewLifecycleOwner, Observer { data ->
-            urlData = data.url
+            waifu = data
 
             Glide.with(this).load(data.url).into(iv_waifuLike)
             tv_quoteLike.text = data.quote
@@ -54,7 +55,14 @@ private lateinit var urlData: String
 
 
         btn_fragmentDownload.setOnClickListener{
-            downloadImage(urlData)
+            downloadImage(waifu)
+            dismiss()
+        }
+
+
+        btn_fragmentDelete.setOnClickListener{
+            deleteWaifu(waifu)
+            dismiss()
         }
 
 
@@ -63,14 +71,21 @@ private lateinit var urlData: String
 
     }
 
-    private fun downloadImage(url: String) {
-
-        if(url != null){
-            viewModel.downloadWaifu(url)
+    private fun downloadImage(waifu: WaifuDB) {
+        if(waifu.url != null){
+            viewModel.downloadWaifu(waifu.url)
             Toast.makeText(context, "Successfully downloaded", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(context, "Download Failed", Toast.LENGTH_SHORT).show()
         }
-
     }
+
+
+
+    private fun deleteWaifu(waifu: WaifuDB){
+        viewModel.deleteWaifu(waifu)
+        Toast.makeText(context, "Waifu unlike", Toast.LENGTH_SHORT).show()
+    }
+
+
 }

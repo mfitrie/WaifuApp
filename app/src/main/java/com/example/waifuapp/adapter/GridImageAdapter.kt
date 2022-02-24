@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.waifuapp.R
 import com.example.waifuapp.fragment.DialogWaifuLiked
 import com.example.waifuapp.model.WaifuDB.WaifuDB
@@ -20,7 +21,9 @@ class GridImageAdapter(val waifuDB: List<WaifuDB>, val itemClickListener: OnItem
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(waifu: WaifuDB, clickListener: OnItemClickListener){
             itemView.waifu_id.text = waifu.waifu_ID.toString()
-            Glide.with(itemView.context).load(waifu.url).into(itemView.iv_item_grid)
+            Glide.with(itemView.context)
+                .load(waifu.url)
+                .into(itemView.iv_item_grid)
 
             itemView.setOnClickListener{
                 clickListener.onItemClicked(waifu)
