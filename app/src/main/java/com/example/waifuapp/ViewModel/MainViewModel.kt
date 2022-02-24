@@ -35,6 +35,10 @@ class MainViewModel(private val repository: Repository, context: Application): A
     // Anime quote
     val animeQuoteResponse: MutableLiveData<Response<AnimeQuoteData>> = MutableLiveData()
 
+    // share data between fragment to dialogFragment
+    private var _data = MutableLiveData<WaifuDB>()
+    val data: LiveData<WaifuDB> = _data
+
 
 
     init {
@@ -160,6 +164,13 @@ class MainViewModel(private val repository: Repository, context: Application): A
         viewModelScope.launch {
             waifuRepository.addWaifu(waifuDB)
         }
+    }
+
+
+
+    // shared data to fragment
+    fun setData(waifuDB: WaifuDB){
+        _data.value = waifuDB
     }
 
 
