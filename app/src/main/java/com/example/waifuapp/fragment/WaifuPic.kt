@@ -65,14 +65,18 @@ class WaifuPic : Fragment() {
 
         // download
         btn_download.setOnClickListener {
-            if(checkPermission()){
-                if(checkInternetConnection()){
-                    downloadImage(data)
-                    Toast.makeText(context, "Successfully download", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(context, "Please turn on your internet connection",Toast.LENGTH_SHORT).show()
-                }
+            if(::data.isInitialized){
+                if(checkPermission()){
+                    if(checkInternetConnection()){
+                        downloadImage(data)
+                        Toast.makeText(context, "Successfully download", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context, "Please turn on your internet connection",Toast.LENGTH_SHORT).show()
+                    }
 
+                }
+            }else{
+                Toast.makeText(context, "Failed to download", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -133,8 +137,8 @@ class WaifuPic : Fragment() {
 
 
                 } else {
-                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
-                    Log.d("FAILED", "getPic: ${response.code()}")
+//                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Problem with server API waifu", Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -172,7 +176,8 @@ class WaifuPic : Fragment() {
 
 
                 } else {
-                    Toast.makeText(requireContext(), response.code(), Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(requireContext(), response.code(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Problem with server API waifu", Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -223,10 +228,14 @@ class WaifuPic : Fragment() {
 
 
     private fun insertDataToDatabase(){
-        val url = data
-        val waifu = WaifuDB(0, url, quoteData)
-        viewModel.addWaifu(waifu)
-        Toast.makeText(context, "Waifu Liked", Toast.LENGTH_SHORT).show()
+        if(::data.isInitialized){
+            val url = data
+            val waifu = WaifuDB(0, url, quoteData)
+            viewModel.addWaifu(waifu)
+            Toast.makeText(context, "Waifu Liked", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(context, "Failed to like", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

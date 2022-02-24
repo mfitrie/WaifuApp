@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.waifuapp.R
+import com.example.waifuapp.fragment.DialogWaifuLiked
 import com.example.waifuapp.model.WaifuDB.WaifuDB
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_waifu_save.view.*
@@ -23,6 +25,12 @@ class GridImageAdapter(val waifuDB: List<WaifuDB>, val context: Context) : Recyc
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(context).load(waifuDB[position].url).into(holder.itemView.iv_item_grid)
+        holder.itemView.waifu_id.text = waifuDB[position].waifu_ID.toString()
+
+//        holder.itemView.setOnClickListener {
+//            Toast.makeText(context, "${waifuDB[position].waifu_ID} clicked", Toast.LENGTH_SHORT).show()
+//            val dialogWaifu = DialogWaifuLiked()
+//        }
     }
 
     override fun getItemCount(): Int {
